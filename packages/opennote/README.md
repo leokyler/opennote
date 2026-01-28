@@ -8,17 +8,18 @@ A note-taking plugin and UI for OpenCode.
 
 OpenNote 是一个集成到 OpenCode 的笔记解决方案，灵感来自 OpenWork。计划包含：
 
-- OpenCode 命令
-- OpenCode skills
+- OpenCode commands (通过这个包提供)
+- OpenCode skills (通过这个包提供)
+- OpenCode 插件 (通过这个包提供)
 - OpenCode 插件
 - 响应式 UI 界面
 - 基于 OpenCode 生态的笔记管理
 
 OpenNote is an OpenCode-integrated note-taking solution inspired by OpenWork. Planned features include:
 
-- OpenCode commands
-- OpenCode skills
-- OpenCode plugin
+- OpenCode commands (Available through this package)
+- OpenCode skills (Available through this package)
+- OpenCode plugin (Available through this package)
 - Responsive UI interface
 - Note management based on OpenCode ecosystem
 

@@ -4,14 +4,11 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 First, run the development server:
 
+> This repository **requires `pnpm`** for installs and scripts. Do not use `npm`, `yarn`, or `bun` for development workflows.
+
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Use pnpm (required)
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
