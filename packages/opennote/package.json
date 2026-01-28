@@ -1,13 +1,20 @@
 {
   "name": "@repo/opennote",
-  "version": "0.0.2",
+  "version": "0.1.0",
+  "description": "OpenNote initialization commands for OpenCode CLI - install predefined note templates with automatic registration",
   "type": "module",
-  "main": "src/index.ts",
-  "types": "src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "bin": {
     "opennote": "./dist/cli.js"
   },
+  "files": [
+    "dist",
+    "templates",
+    "README.md"
+  ],
   "scripts": {
+    "prepublishOnly": "pnpm build",
     "dev": "tsc --watch",
     "build": "tsc",
     "test": "vitest run",
@@ -17,6 +24,29 @@
     "lint:fix": "eslint src --ext .ts --fix"
   },
   "exports": {},
+  "keywords": [
+    "opennote",
+    "opencode",
+    "note-taking",
+    "cli",
+    "template",
+    "markdown",
+    "productivity",
+    "zettelkasten"
+  ],
+  "author": "OpenNote Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/opennote.git"
+  },
+  "homepage": "https://github.com/yourusername/opennote#readme",
+  "bugs": {
+    "url": "https://github.com/yourusername/opennote/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "commander": "^11.1.0",
     "@commander-js/extra-typings": "^11.1.0"

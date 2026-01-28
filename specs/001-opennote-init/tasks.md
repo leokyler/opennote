@@ -161,6 +161,109 @@
 
 ---
 
+## Phase 7: Package & Distribution (Optional)
+
+**Purpose**: Prepare package for npm distribution (publish only when ready)
+
+**When to Publish**:
+- After User Story 3 is complete
+- After core Phase 6 tasks are done (T039, T040, T043)
+- All tests pass and basic validation complete
+- Version should be at least 0.1.0 for first public release
+
+**Versioning Strategy**:
+- **0.1.0**: First public release after US1+US2 (MVP functionality)
+- **0.2.0**: Include US3 feedback messages
+- **1.0.0**: All features complete, Phase 6 polished, ready for production
+
+### Package Configuration Tasks
+
+- [ ] T052 [P] Verify package.json configuration for npm publishing
+  - Check: name, version, description, author, license
+  - Check: main entry point, bin commands, exports
+  - Check: dependencies and devDependencies
+  - Check: files and publishConfig (if needed)
+- [ ] T053 [P] Add .npmignore file to exclude unnecessary files from npm package
+  - Exclude: node_modules/, tests/, .git/, .vscode/, dist/
+  - Exclude: *.log, .env*, *.md (except README)
+  - Ensure only production files are published
+- [ ] T054 [P] Create npm scripts for publish workflow
+  - Add prepublishOnly script: runs before package is packed
+  - Add prepublish script: runs before package is published (deprecated but may be used)
+  - Add postpublish script: runs after package is published
+- [ ] T055 [P] Configure semantic-release for automated versioning (optional)
+  - Set up conventional commits parsing
+  - Configure changelog generation
+  - Add GitHub release creation
+  - Enable automated npm publish from CI
+- [ ] T056 [P] Add GitHub Actions workflow for automated npm publishing
+  - Create .github/workflows/publish.yml
+  - Trigger on version tags or manual dispatch
+  - Run tests before publish
+  - Build package and publish to npm
+  - Use NPM_TOKEN secret for authentication
+
+### Pre-Publish Validation Tasks
+
+- [ ] T057 [P] Verify package build and distribution before publish
+  - Run: `pnpm build` and verify dist/ output
+  - Check: All required files are included
+  - Validate: TypeScript types are generated correctly
+  - Test: Package can be installed and used from tarball
+- [ ] T058 [P] Run package integrity checks
+  - Use: `npm pack` to create tarball
+  - Verify: tarball contents are correct
+  - Test: Install from tarball: `npm install opennote-0.x.x.tgz`
+  - Check: Bin command is executable: `./node_modules/.bin/opennote`
+- [ ] T059 [P] Verify package.json metadata
+  - Check: package name is available on npm (use `npm view <name>`)
+  - Validate: version follows semver format
+  - Ensure: description is clear and concise
+  - Check: keywords for better discoverability
+  - Add: repository and homepage URLs
+
+### Publishing Tasks
+
+- [ ] T060 Publish package to npm (version >= 0.1.0)
+  - Command: `npm publish` or `pnpm publish --access public`
+  - Note: First publish requires `--access public` for scoped packages
+  - Verify: Package appears on npm registry
+  - Test: Install from npm in fresh environment: `npm install @repo/opennote`
+- [ ] T061 [P] Create release notes for npm package
+  - Document: What's new in this version
+  - Include: Fixed issues and new features
+  - Add: Migration guides if needed (for breaking changes)
+  - Format: Use markdown for npm display
+
+### Post-Publish Tasks
+
+- [ ] T062 [P] Verify npm package installation
+  - Test: Fresh install in new project
+  - Verify: `opennote init` command works
+  - Check: All commands are installed correctly
+  - Test: Re-initialization works as expected
+- [ ] T063 [P] Update documentation and announce release
+  - Update: README with latest version and usage
+  - Create: GitHub release with changelog
+  - Announce: In relevant channels (community, discord, etc.)
+  - Tag: Release in version control: `git tag v0.1.0`
+
+---
+
+## Dependencies & Execution Order (Updated)
+
+### Phase Dependencies (Updated)
+
+- **Setup (Phase 1)**: No dependencies - can start immediately
+- **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
+- **User Stories (Phase 3-5)**: All depend on Foundational phase completion
+  - User stories can then proceed in parallel (if staffed)
+  - Or sequentially in priority order (P1 → P2 → P3)
+- **Polish (Phase 6)**: Depends on all desired user stories being complete
+- **Package & Distribution (Phase 7)**: Optional - can be done after Phase 5 (US1+US2) or wait for Phase 6
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies

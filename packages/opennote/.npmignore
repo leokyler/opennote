@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+
+# Test files
+test/
+tests/
+*.test.ts
+*.spec.ts
+coverage/
+
+# Source files (only dist is published)
+src/
+*.ts
+tsconfig.json
+tsconfig.tsbuildinfo
+
+# Documentation (except README)
+docs/
+*.md
+!README.md
+
+# Development files
+.env
+.env.*
+.gitignore
+.prettierrc*
+.eslintrc*
+
+# Build artifacts
+.turbo
+.vitest/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Git
+.git
+.gitattributes
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.travis.yml
+
+# Package manager files
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
