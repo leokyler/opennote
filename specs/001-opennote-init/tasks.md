@@ -128,14 +128,14 @@
 
 ### Tests for User Story 3
 
-- [ ] T034 [P] [US3] Unit test for feedback message generation in packages/opennote/tests/unit/feedback.test.ts
+- [x] T034 [P] [US3] Unit test for feedback message generation in packages/opennote/tests/unit/feedback.test.ts
 
 ### Implementation for User Story 3
 
-- [ ] T035 [US3] Create feedback message utility in packages/opennote/src/utils/feedback.ts (formatCommandList(commands: PredefinedCommand[]): string, generateSuccessMessage(count: number): string)
-- [ ] T036 [US3] Integrate feedback messages into init command in packages/opennote/src/commands/init.ts (display installed commands)
-- [ ] T037 [US3] Add usage examples to feedback messages in packages/opennote/src/utils/feedback.ts (show how to invoke each command)
-- [ ] T038 [US3] Implement color/formatted output in packages/opennote/src/utils/feedback.ts (improve readability)
+- [x] T035 [US3] Create feedback message utility in packages/opennote/src/utils/feedback.ts (formatCommandList(commands: PredefinedCommand[]): string, generateSuccessMessage(count: number): string)
+- [x] T036 [US3] Integrate feedback messages into init command in packages/opennote/src/commands/init.ts (display installed commands)
+- [x] T037 [US3] Add usage examples to feedback messages in packages/opennote/src/utils/feedback.ts (show how to invoke each command)
+- [x] T038 [US3] Implement color/formatted output in packages/opennote/src/utils/feedback.ts (improve readability)
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -166,12 +166,14 @@
 **Purpose**: Prepare package for npm distribution (publish only when ready)
 
 **When to Publish**:
+
 - After User Story 3 is complete
 - After core Phase 6 tasks are done (T039, T040, T043)
 - All tests pass and basic validation complete
 - Version should be at least 0.1.0 for first public release
 
 **Versioning Strategy**:
+
 - **0.1.0**: First public release after US1+US2 (MVP functionality)
 - **0.2.0**: Include US3 feedback messages
 - **1.0.0**: All features complete, Phase 6 polished, ready for production
@@ -185,7 +187,7 @@
   - Check: files and publishConfig (if needed)
 - [ ] T053 [P] Add .npmignore file to exclude unnecessary files from npm package
   - Exclude: node_modules/, tests/, .git/, .vscode/, dist/
-  - Exclude: *.log, .env*, *.md (except README)
+  - Exclude: _.log, .env_, \*.md (except README)
   - Ensure only production files are published
 - [ ] T054 [P] Create npm scripts for publish workflow
   - Add prepublishOnly script: runs before package is packed
