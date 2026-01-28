@@ -101,20 +101,20 @@
 
 ### Tests for User Story 2
 
-- [ ] T026 [P] [US2] Integration test for re-initialization in packages/opennote/tests/integration/re-init.test.ts
+- [x] T026 [P] [US2] Integration test for re-initialization in packages/opennote/tests/integration/re-init.test.ts
 
 ### Implementation for User Story 2
 
-- [ ] T027 [US2] Add installation state detection in packages/opennote/src/commands/init.ts (check .opencode/opennote-state.json)
-- [ ] T028 [US2] Implement graceful skip logic in packages/opennote/src/commands/init.ts (return message if already initialized)
-- [ ] T029 [US2] Add version comparison in packages/opennote/src/utils/state-manager.ts (detect version changes)
-- [ ] T030 [US2] Add installation failure handling in packages/opennote/src/commands/init.ts (detect and handle partial installation failures, network issues, permission denied with helpful error messages per FR-007)
-- [ ] T030a [US2] Implement simple retry mechanism for transient errors in packages/opennote/src/commands/init.ts (max 3 retries with exponential backoff for network-related errors)
-- [ ] T030b [US2] Implement corrupted state handling in packages/opennote/src/commands/init.ts (re-initialize if state file invalid)
-- [ ] T030c [US2] Implement transactional install/rollback in packages/opennote/src/commands/init.ts (ensure partial installations are cleaned up and `.opencode/opennote-state.json` remains consistent on failure)
-- [ ] T031 [P] [US2] Add permission denied test in packages/opennote/tests/integration/permissions.test.ts (simulate EACCES error)
-- [ ] T032 [P] [US2] Add corrupted state recovery test in packages/opennote/tests/integration/corrupted-state.test.ts (invalid JSON, missing fields)
-- [ ] T033 [P] [US2] Add rollback integration test in packages/opennote/tests/integration/rollback.test.ts (simulate partial installation failure and verify cleanup and consistent state)
+- [x] T027 [US2] Add installation state detection in packages/opennote/src/commands/init.ts (check .opencode/opennote-state.json)
+- [x] T028 [US2] Implement graceful skip logic in packages/opennote/src/commands/init.ts (return message if already initialized)
+- [x] T029 [US2] Add version comparison in packages/opennote/src/utils/state-manager.ts (detect version changes)
+- [x] T030 [US2] Add installation failure handling in packages/opennote/src/commands/init.ts (detect and handle partial installation failures, network issues, permission denied with helpful error messages per FR-007)
+- [x] T030a [US2] Implement simple retry mechanism for transient errors in packages/opennote/src/commands/init.ts (max 3 retries with exponential backoff for network-related errors)
+- [x] T030b [US2] Implement corrupted state handling in packages/opennote/src/commands/init.ts (re-initialize if state file invalid)
+- [x] T030c [US2] Implement transactional install/rollback in packages/opennote/src/commands/init.ts (ensure partial installations are cleaned up and `.opencode/opennote-state.json` remains consistent on failure)
+- [x] T031 [P] [US2] Add permission denied test in packages/opennote/tests/integration/permissions.test.ts (simulate EACCES error)
+- [x] T032 [P] [US2] Add corrupted state recovery test in packages/opennote/tests/integration/corrupted-state.test.ts (invalid JSON, missing fields)
+- [x] T033 [P] [US2] Add rollback integration test in packages/opennote/tests/integration/rollback.test.ts (simulate partial installation failure and verify cleanup and consistent state)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
