@@ -19,6 +19,9 @@ import { fileExists } from "../../src/utils/file-operations.js";
 import fs from "fs/promises";
 import path from "path";
 import os from "os";
+import { readFileSync } from "fs";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
 // 状态文件路径：存储初始化状态信息
 const STATE_FILE = ".opencode/opennote-state.json";
@@ -28,21 +31,32 @@ const COMMANDS_DIR = ".opencode/commands";
 
 describe("Re-initialization", () => {
   let tempDir: string;
+  let packageVersion: string;
 
   /**
    * 每个测试前的设置
    * 
    * 1. 在系统临时目录创建唯一的测试目录
    * 2. 切换工作目录到测试目录
+   * 3. 读取 package.json 获取版本号
    * 
    * 这样可以：
    * - 隔离每个测试的文件系统操作
    * - 避免污染实际项目目录
    * - 确保测试可重复执行
+   * - 获取版本号传递给 init 命令
    */
   beforeEach(async () => {
     tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "opennote-test-"));
     process.chdir(tempDir);
+    
+    // 读取 package.json 获取版本号
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+    const packageJson = JSON.parse(
+      readFileSync(join(__dirname, "../../package.json"), "utf-8")
+    );
+    packageVersion = packageJson.version;
   });
 
   /**
@@ -70,15 +84,12 @@ describe("Re-initialization", () => {
    * 这是用户故事 2 的核心需求：优雅处理重复初始化
    */
   it("should skip initialization when already initialized", async () => {
-    const initCommand = createInitCommand();
+    const initCommand = createInitCommand(packageVersion);
 
-    // 拦截 console.log 以捕获输出
     const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
     const consoleErrorSpy = vi
       .spyOn(console, "error")
       .mockImplementation(() => {});
-    
-    // 拦截 process.exit 以防止测试进程终止
     const processExitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
       throw new Error("process.exit called");
     });
@@ -101,7 +112,6 @@ describe("Re-initialization", () => {
     const logCalls = consoleLogSpy.mock.calls.flat().join("\n");
     expect(logCalls).toContain("already initialized");
 
-    // 恢复原始函数
     processExitSpy.mockRestore();
     consoleLogSpy.mockRestore();
     consoleErrorSpy.mockRestore();
@@ -117,7 +127,7 @@ describe("Re-initialization", () => {
    * 目的：确保状态文件保持不变，证明重复初始化确实被跳过
    */
   it("should preserve existing state on re-initialization", async () => {
-    const initCommand = createInitCommand();
+    const initCommand = createInitCommand(packageVersion);
 
     const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
     const consoleErrorSpy = vi
@@ -162,7 +172,7 @@ describe("Re-initialization", () => {
    * 目的：确保重复初始化不会破坏或复制命令文件
    */
   it("should keep commands functional after re-initialization", async () => {
-    const initCommand = createInitCommand();
+    const initCommand = createInitCommand(packageVersion);
 
     const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
     const consoleErrorSpy = vi
@@ -205,7 +215,7 @@ describe("Re-initialization", () => {
    * 目的：确保用户可以看到已安装的 OpenNote 版本
    */
   it("should detect version changes", async () => {
-    const initCommand = createInitCommand();
+    const initCommand = createInitCommand(packageVersion);
 
     const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
     const consoleErrorSpy = vi
@@ -247,7 +257,7 @@ describe("Re-initialization", () => {
    * 目的：确保不会创建重复的命令文件导致混乱
    */
   it("should not create duplicate command files on re-initialization", async () => {
-    const initCommand = createInitCommand();
+    const initCommand = createInitCommand(packageVersion);
 
     const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
     const consoleErrorSpy = vi

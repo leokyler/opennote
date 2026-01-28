@@ -17,21 +17,34 @@ import { createInitCommand } from "../../src/commands/init.js";
 import fs from "fs/promises";
 import path from "path";
 import os from "os";
+import { readFileSync } from "fs";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
 describe("Permission Denied Handling", () => {
   let tempDir: string;
+  let packageVersion: string;
 
   /**
    * 每个测试前的设置
    * 
    * 1. 在系统临时目录创建唯一的测试目录
    * 2. 切换工作目录到测试目录
+   * 3. 读取 package.json 获取版本号
    * 
    * 隔离测试环境，避免影响实际项目目录
    */
   beforeEach(async () => {
     tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "opennote-test-"));
     process.chdir(tempDir);
+    
+    // 读取 package.json 获取版本号
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+    const packageJson = JSON.parse(
+      readFileSync(join(__dirname, "../../package.json"), "utf-8")
+    );
+    packageVersion = packageJson.version;
   });
 
   /**
@@ -40,7 +53,7 @@ describe("Permission Denied Handling", () => {
    * 1. 切换回用户主目录
    * 2. 递归删除测试目录
    * 
-   * 注意：可能需要处理目录权限问题（chmod 失败）
+   * 确保测试环境干净，不影响后续测试
    */
   afterEach(async () => {
     process.chdir(os.homedir());
@@ -75,13 +88,12 @@ describe("Permission Denied Handling", () => {
     // 设置目录为只读权限（模拟权限拒绝）
     await fs.chmod(".opencode", 0o444);
 
-    const initCommand = createInitCommand();
+    // 创建 init 命令，传递版本号
+    const initCommand = createInitCommand(packageVersion);
 
     // 拦截 console 输出以避免测试输出混乱
     const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-    const consoleErrorSpy = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => {});
+    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     
     // 拦截 process.exit 以防止测试进程终止
     const processExitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
@@ -97,7 +109,6 @@ describe("Permission Denied Handling", () => {
     }
 
     // 尝试恢复目录权限以便清理
-    // 注意：这可能失败，所以用 try-catch 包裹
     try {
       await fs.chmod(".opencode", 0o755);
     } catch (e) {

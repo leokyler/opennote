@@ -18,6 +18,9 @@ import { createInitCommand } from "../../src/commands/init.js";
 import fs from "fs/promises";
 import path from "path";
 import os from "os";
+import { readFileSync } from "fs";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
 // 状态文件路径：存储初始化状态信息
 const STATE_FILE = ".opencode/opennote-state.json";
@@ -27,18 +30,28 @@ const COMMANDS_DIR = ".opencode/commands";
 
 describe("Rollback Integration", () => {
   let tempDir: string;
+  let packageVersion: string;
 
   /**
    * 每个测试前的设置
    * 
    * 1. 在系统临时目录创建唯一的测试目录
    * 2. 切换工作目录到测试目录
+   * 3. 读取 package.json 获取版本号
    * 
    * 隔离测试环境，避免影响实际项目目录
    */
   beforeEach(async () => {
     tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "opennote-test-"));
     process.chdir(tempDir);
+    
+    // 读取 package.json 获取版本号
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+    const packageJson = JSON.parse(
+      readFileSync(join(__dirname, "../../package.json"), "utf-8")
+    );
+    packageVersion = packageJson.version;
   });
 
   /**
@@ -87,7 +100,8 @@ describe("Rollback Integration", () => {
     await fs.mkdir(path.dirname(STATE_FILE), { recursive: true });
     await fs.writeFile(STATE_FILE, JSON.stringify({ initialized: false }));
 
-    const initCommand = createInitCommand();
+    // 创建 init 命令，传递版本号
+    const initCommand = createInitCommand(packageVersion);
 
     const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
     const consoleErrorSpy = vi
