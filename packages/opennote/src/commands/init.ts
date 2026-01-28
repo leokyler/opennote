@@ -46,14 +46,6 @@ const STATE_FILE = ".opencode/opennote-state.json";
 const COMMANDS_DIR = ".opencode/commands";
 
 /**
- * 当前版本号
- * 
- * 用于版本比较和更新检测
- * 遵循语义化版本规范（semver）
- */
-const CURRENT_VERSION = "1.0.0";
-
-/**
  * 初始化命令选项接口
  * 
  * 定义 init 命令支持的命令行选项
@@ -200,26 +192,10 @@ async function retryOperation<T>(
  * 
  * 创建并返回 Commander.js 的 init 命令实例
  * 
- * 命令功能流程：
- * 1. 检查是否已初始化
- * 2. 检查状态是否有效
- * 3. 处理不同场景：
- *    - 已初始化且有效：跳过
- *    - 已初始化但可更新：提示更新
- *    - 状态无效或强制模式：清理并重新初始化
- * 4. 执行命令安装（带重试机制）
- * 5. 保存状态文件
- * 6. 显示成功消息
- * 
- * 错误处理：
- * - 权限错误（EACCES）：提供详细的权限信息
- * - 磁盘空间不足（ENOSPC）：提示清理磁盘
- * - 只读文件系统（EROFS）：提示检查文件系统
- * - 其他错误：清理部分安装后退出
- * 
+ * @param version - 包版本号，从 package.json 读取
  * @returns {Command} Commander.js 命令实例
  */
-export function createInitCommand(): Command {
+export function createInitCommand(version: string): Command {
   const initCommand = new Command("init")
     .description("Initialize OpenNote with predefined note commands")
     // 添加 --force 选项，用于强制重新初始化
@@ -244,9 +220,9 @@ export function createInitCommand(): Command {
           const state = await loadState();
 
           // 检查版本是否需要更新
-          if (state && needsUpdate(state.version, CURRENT_VERSION)) {
+          if (state && needsUpdate(state.version, version)) {
             console.log(
-              `OpenNote is initialized but can be updated (version ${state.version} → ${CURRENT_VERSION}).`,
+              `OpenNote is initialized but can be updated (version ${state.version} → ${version}).`,
             );
             console.log("Run with --force to update.");
             return;
@@ -297,13 +273,13 @@ export function createInitCommand(): Command {
           // 创建新的状态对象
           const newState = {
             initialized: true,
-            version: CURRENT_VERSION,
+            version: version,
             installedAt: new Date().toISOString(),
             // 映射命令到注册信息
             commands: PREDEFINED_COMMANDS.map((cmd) => ({
               name: cmd.name,
               installedAt: new Date().toISOString(),
-              version: CURRENT_VERSION,
+              version: version,
               source: "predefined" as const,
             })),
           };
