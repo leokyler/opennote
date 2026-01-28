@@ -145,19 +145,19 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T039 [P] Add comprehensive error messages in packages/opennote/src/utils/error-handler.ts with error types: InstallationError extends Error, ValidationError extends Error, PermissionError extends Error
-- [ ] T040 [P] Implement logging in packages/opennote/src/utils/logger.ts (info, warn, error levels) with output to stdout (file logging via environment variable LOG_FILE if set)
-- [ ] T041 [P] Create integration test for full opennote flow in packages/opennote/tests/integration/opennote-flow.test.ts
-- [ ] T042 [P] Add reliability test in packages/opennote/tests/integration/reliability.test.ts to verify SC-002 (100% success rate in defined test scenarios)
-- [ ] T043 [P] Add README with usage instructions in packages/opennote/README.md
-- [ ] T044 [P] Run quickstart.md validation scenarios in packages/opennote/tests/quickstart-validation.test.ts
-- [ ] T045 Code cleanup and remove unused imports across all files
-- [ ] T046 Performance optimization (ensure init completes in <5s and re-init <2s when measured on the project's benchmark environment: GitHub Actions `ubuntu-latest` runner with Node.js 18 LTS, 2 vCPU, 8GB RAM; measurements performed by benchmark tests T047-T049 using `performance.now()`)
-- [ ] T047 [P] Add performance benchmark for init command in packages/opennote/tests/benchmark/init-benchmark.test.ts using performance.now()
-- [ ] T048 [P] Add performance benchmark for re-init command in packages/opennote/tests/benchmark/re-init-benchmark.test.ts
-- [ ] T049 [P] Add automated verification in CI: assert init <5000ms and re-init <2000ms on benchmark suite
-- [ ] T050 [P] Conduct manual usability test per SC-004 (N=20 participants; provide fresh project, run `opennote init`, then ask participants to list ≥2 commands and demonstrate invoking one; success criterion: ≥19/20 pass; record results and feedback)
-- [ ] T051 [P] Create automated alternative validation script per SC-004 (verify initialization output includes machine-parseable commands list and usage examples; script should parse output and validate it contains required information)
+- [x] T039 [P] Add comprehensive error messages in packages/opennote/src/utils/error-handler.ts with error types: InstallationError extends Error, ValidationError extends Error, PermissionError extends Error
+- [x] T040 [P] Implement logging in packages/opennote/src/utils/logger.ts (info, warn, error levels) with output to stdout (file logging via environment variable LOG_FILE if set)
+- [x] T041 [P] Create integration test for full opennote flow in packages/opennote/tests/integration/opennote-flow.test.ts
+- [x] T042 [P] Add reliability test in packages/opennote/tests/integration/reliability.test.ts to verify SC-002 (100% success rate in defined test scenarios)
+- [x] T043 [P] Add README with usage instructions in packages/opennote/README.md
+- [x] T044 [P] Run quickstart.md validation scenarios in packages/opennote/tests/quickstart-validation.test.ts
+- [x] T045 Code cleanup and remove unused imports across all files
+- [x] T046 Performance optimization (ensure init completes in <5s and re-init <2s when measured on the project's benchmark environment: GitHub Actions `ubuntu-latest` runner with Node.js 18 LTS, 2 vCPU, 8GB RAM; measurements performed by benchmark tests T047-T049 using `performance.now()`)
+- [x] T047 [P] Add performance benchmark for init command in packages/opennote/tests/benchmark/init-benchmark.test.ts using performance.now()
+- [x] T048 [P] Add performance benchmark for re-init command in packages/opennote/tests/benchmark/re-init-benchmark.test.ts
+- [x] T049 [P] Add automated verification in CI: assert init <5000ms and re-init <2000ms on benchmark suite
+- [x] T050 [P] Conduct manual usability test per SC-004 (N=20 participants; provide fresh project, run `opennote init`, then ask participants to list ≥2 commands and demonstrate invoking one; success criterion: ≥19/20 pass; record results and feedback)
+- [x] T051 [P] Create automated alternative validation script per SC-004 (verify initialization output includes machine-parseable commands list and usage examples; script should parse output and validate it contains required information)
 
 ---
 
