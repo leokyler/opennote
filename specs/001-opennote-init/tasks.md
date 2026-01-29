@@ -175,8 +175,7 @@
 **Versioning Strategy**:
 
 - **0.1.0**: First public release after US1+US2 (MVP functionality)
-- **0.2.0**: Include US3 feedback messages
-- **1.0.0**: All features complete, Phase 6 polished, ready for production
+- **0.1.1**: Include US3 feedback messages.All features complete, Phase 6 polished, ready for production
 
 ### Package Configuration Tasks
 
